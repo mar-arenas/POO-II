@@ -1,57 +1,42 @@
 package modelo;
 
-// Clase abstracta base que define los atributos y comportamientos comunes de los pedidos
-public abstract class Pedido {
-    protected int id;
-    protected String direccion;
-    protected double distancia;
-    protected String repartidorAsignado;
+public class Pedido {
+    private int id;
+    private String direccionEntrega;
+    private EstadoPedido estado;
 
-    // Constructor
-    public Pedido(int id, String direccion, double distancia) {
+    public Pedido(int id, String direccionEntrega) {
         this.id = id;
-        this.direccion = direccion;
-        this.distancia = distancia;
-        this.repartidorAsignado = null;
+        this.direccionEntrega = direccionEntrega;
+        this.estado = EstadoPedido.PENDIENTE;
     }
 
-    // Metodo implementado que muestra el resumen del pedido
-    public void mostrarResumen() {
-        System.out.println("\n[" + this.getClass().getSimpleName() + "]");
-        System.out.println("Pedido #" + id);
-        System.out.println("Direccion: " + direccion);
-        System.out.println("Distancia: " + distancia + " km");
-        System.out.println("Repartidor asignado: " + 
-            (repartidorAsignado != null ? repartidorAsignado : "No asignado"));
-        System.out.println("Tiempo estimado: " + calcularTiempoEntrega() + " minutos");
-    }
-
-    // Metodo abstracto que cada subclase debe implementar con su logica especifica
-    public abstract int calcularTiempoEntrega();
-
-    // Metodo para asignacion automatica de repartidor
-    public abstract void asignarRepartidor();
-
-    // Sobrecarga: asignacion manual de repartidor por nombre
-    public void asignarRepartidor(String nombre) {
-        this.repartidorAsignado = nombre;
-        System.out.println("Repartidor " + nombre + " asignado manualmente al pedido #" + id);
-    }
-
-    // Getters
     public int getId() {
         return id;
     }
 
-    public String getRepartidorAsignado() {
-        return repartidorAsignado;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getDireccionEntrega() {
+        return direccionEntrega;
     }
 
-    public double getDistancia() {
-        return distancia;
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPedido nuevoEstado) {
+        this.estado = nuevoEstado;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido #" + id + " [Direccion: " + direccionEntrega + ", Estado: " + estado + "]";
     }
 }

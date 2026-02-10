@@ -1,39 +1,37 @@
 import modelo.*;
-import controlador.ControladorDeEnvios;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
-// Clase principal que simula el sistema de entregas SpeedFast
 public class Main {
     public static void main(String[] args) {
-        ControladorDeEnvios controlador = new ControladorDeEnvios();
+        System.out.println("[Zona de carga inicializada]\n");
+        
+        ZonaDeCarga zonaDeCarga = new ZonaDeCarga();
 
-        // Crear pedido de comida y asignar repartidor automaticamente
-        PedidoComida pedidoComida = new PedidoComida(101, "Av. Principal 123", 5.0);
-        pedidoComida.asignarRepartidor();
-        pedidoComida.mostrarResumen();
-        controlador.setPedido(pedidoComida);
-        controlador.despachar();
+        zonaDeCarga.agregarPedido(new Pedido(1, "Av. Principal 123"));
+        zonaDeCarga.agregarPedido(new Pedido(2, "Calle Las Rosas 456"));
+        zonaDeCarga.agregarPedido(new Pedido(3, "Av. Santa Rosa 789"));
+        zonaDeCarga.agregarPedido(new Pedido(4, "Calle Los Pinos 321"));
+        zonaDeCarga.agregarPedido(new Pedido(5, "Av. Libertador 654"));
 
-        System.out.println("\n" + "=".repeat(50));
+        System.out.println();
 
-        // Crear pedido encomienda y asignar repartidor manualmente
-        PedidoEncomienda pedidoEncomienda = new PedidoEncomienda(102, "Av. Santa Rosa 567", 7.0);
-        pedidoEncomienda.asignarRepartidor("Daniela Tapia");
-        pedidoEncomienda.mostrarResumen();
-        controlador.setPedido(pedidoEncomienda);
-        controlador.despachar();
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        System.out.println("\n" + "=".repeat(50));
+        executor.execute(new Repartidor("Repartidor A", zonaDeCarga));
+        executor.execute(new Repartidor("Repartidor B", zonaDeCarga));
+        executor.execute(new Repartidor("Repartidor C", zonaDeCarga));
 
-        // Crear pedido express y cancelarlo
-        PedidoExpress pedidoExpress = new PedidoExpress(103, "Calle Los Pinos 890", 3.0);
-        pedidoExpress.asignarRepartidor();
-        pedidoExpress.mostrarResumen();
-        controlador.setPedido(pedidoExpress);
-        controlador.cancelar();
+        executor.shutdown();
 
-        System.out.println("\n" + "=".repeat(50));
+        try {
+            executor.awaitTermination(1, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        // Mostrar historial de entregas
-        controlador.verHistorial();
+        System.out.println("\nTodos los pedidos han sido entregados correctamente");
     }
 }
+
