@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run SpeedFast",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "POO-II_dc93f532",
+            "classPaths": [
+                "${workspaceFolder}/lib/*",
+                "${workspaceFolder}/bin"
+            ]
+        }
+    ]
+}
