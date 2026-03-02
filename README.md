@@ -90,8 +90,6 @@ Interfaz gráfica de usuario con Swing:
 
 ## Uso del Sistema
 
-## Uso del Sistema
-
 ### Ventana Principal
 Al ejecutar la aplicación, se despliega una ventana principal con tres pestañas que permiten acceder a las diferentes funcionalidades:
 
@@ -124,30 +122,6 @@ El sistema incluye validaciones robustas para garantizar la integridad de los da
 - Formato correcto de fecha y hora
 - Verificación de existencia de pedidos y repartidores al crear entregas
 - Confirmación antes de eliminar registros
-
-## Base de Datos
-
-El sistema utiliza MySQL como motor de base de datos con el siguiente esquema:
-
-### Tabla: repartidores
-- `id` (INT, PRIMARY KEY, AUTO_INCREMENT)
-- `nombre` (VARCHAR)
-- `disponible` (BOOLEAN)
-
-### Tabla: pedidos
-- `id` (INT, PRIMARY KEY, AUTO_INCREMENT)
-- `direccion` (VARCHAR)
-- `descripcion` (TEXT)
-- `tipo` (ENUM: 'COMIDA', 'ENCOMIENDA', 'EXPRESS')
-- `estado` (ENUM: 'PENDIENTE', 'EN_REPARTO', 'ENTREGADO')
-- `cliente` (VARCHAR)
-
-### Tabla: entregas
-- `id` (INT, PRIMARY KEY, AUTO_INCREMENT)
-- `pedido_id` (INT, FOREIGN KEY)
-- `repartidor_id` (INT, FOREIGN KEY)
-- `fecha_entrega` (DATETIME)
-- `observaciones` (TEXT)
 
 ## Contexto Académico
 
